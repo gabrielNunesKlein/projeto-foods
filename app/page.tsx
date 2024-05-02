@@ -6,6 +6,7 @@ import { ProductList } from "./_components/ProductList";
 import { Button } from "./_components/ui/button";
 import { ChevronsRightIcon } from "lucide-react";
 import { db } from "./_lib/prisma";
+import { PromoBanner } from "./_components/promo-banner";
 
 export default async function Home() {
 
@@ -33,15 +34,9 @@ export default async function Home() {
       </div>
 
       <div className="px-5 pt-6">
-        <Image 
+        <PromoBanner 
           src="/banner-01.png"
           alt="Até 30% de desconto em pitzza!"
-          height={0}
-          width={0}
-          className="h-auto w-full"
-          objectFit="contain"
-          sizes="100vh"
-          quality={100}
         />
       </div>
 
@@ -56,6 +51,13 @@ export default async function Home() {
           </Button>
         </div>
         <ProductList products={products} />
+      </div>
+
+      <div className="px-5 pt-6">
+        <PromoBanner 
+          src="/banner-02.png"
+          alt="Até 30% de desconto em pitzza!"
+        />
       </div>
      
     </>
