@@ -15,6 +15,19 @@ export default function Home() {
       <div className="px-5 py-6">
         <CategoryList />
       </div>
+
+      <div className="px-5 pt-6">
+        <Image 
+          src="/banner-01.png"
+          alt="Até 30% de desconto em pitzza!"
+          height={0}
+          width={0}
+          className="h-auto w-full"
+          objectFit="contain"
+          sizes="100vh"
+          quality={100}
+        />
+      </div>
     </>
   );
 }
