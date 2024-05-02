@@ -5,8 +5,21 @@ import CategoryList from "./_components/category-list";
 import { ProductList } from "./_components/ProductList";
 import { Button } from "./_components/ui/button";
 import { ChevronsRightIcon } from "lucide-react";
+import { db } from "./_lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+
+  const products = await db.product.findMany({
+    take: 10,
+    include: {
+        restaurant: {
+            select: {
+                name: true
+            }
+        }
+    }
+})
+
   return (
     <>
       <Header />
@@ -42,7 +55,7 @@ export default function Home() {
             <ChevronsRightIcon />
           </Button>
         </div>
-        <ProductList />
+        <ProductList products={products} />
       </div>
      
     </>

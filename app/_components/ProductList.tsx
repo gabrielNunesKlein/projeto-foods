@@ -1,10 +1,8 @@
-import { db } from "../_lib/prisma"
+import { Prisma } from "@prisma/client"
 import { ProductItem } from "./product-item"
 
-export const ProductList = async () => {
-
-    const products = await db.product.findMany({
-        take: 10,
+interface ProductListProps {
+    products: Prisma.ProductGetPayload<{
         include: {
             restaurant: {
                 select: {
@@ -12,7 +10,10 @@ export const ProductList = async () => {
                 }
             }
         }
-    })
+    }>[]
+}
+
+export const ProductList = async ({ products }: ProductListProps) => {
 
     console.log("Products >>> ", products)
 
