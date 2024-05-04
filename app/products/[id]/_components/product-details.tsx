@@ -41,7 +41,7 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
 
 
   return (
-    <div className="py-5">
+    <div className="z-50 relative py-5 rounded-tl-3xl rounded-tr-3xl mt-[-1.5rem] bg-white">
     <div className="flex items-center gap-[0.375rem] px-5">
         <div className="relative w-6 h-6">
             <Image 
