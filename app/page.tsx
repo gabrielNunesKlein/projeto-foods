@@ -47,10 +47,12 @@ export default async function Home() {
           <h2 className="font-semibold">
             Pedidos Recomendados
           </h2>
-          <Button variant="ghost" className="text-primary p-0 hover:bg-transparent h-fit">
-            Ver todos
-            <ChevronsRightIcon />
-          </Button>
+          <Link href="/products/recomendaded">
+            <Button variant="ghost" className="text-primary p-0 hover:bg-transparent h-fit">
+              Ver todos
+              <ChevronsRightIcon />
+            </Button>
+          </Link>
         </div>
         <ProductList products={products} />
       </div>
