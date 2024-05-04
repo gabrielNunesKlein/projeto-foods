@@ -11,6 +11,7 @@ import { Button } from '@/app/_components/ui/button'
 import { BikeIcon, ChevronLeftIcon, ChevronRightIcon, TimerIcon } from 'lucide-react'
 import { Card } from '@/app/_components/ui/card'
 import { ProductList } from '@/app/_components/ProductList'
+import DeliveryInfo from '@/app/_components/delivery-info';
 
 interface ProductDetailsProps {
     product: Prisma.ProductGetPayload<{
@@ -83,42 +84,7 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
     </div>
     
     <div className="px-5">
-        <Card className='flex justify-around py-3 mt-6'>
-            <div className='flex flex-col items-center'>
-                <div className='flex items-center gap-1 text-muted-foreground'>
-                    <span className='text-xs'>Entrga</span>
-                    <BikeIcon size={14} />
-                </div>
-                
-                { Number(product.restaurant.deliveryFae) > 0 ? (
-                    <p className='text-xs font-semibold'>
-                        {formatCurrency(Number(product.restaurant.deliveryFae))}
-                    </p>
-                ): (
-                    <p className='text-xs font-semibold'>
-                        Gratis
-                    </p>
-                )}
-            </div>
-
-            <div className='flex flex-col items-center'>
-                <div className='flex items-center gap-1 text-muted-foreground'>
-                    <span className='text-xs'>Entrga</span>
-                    <TimerIcon size={14} />
-                </div>
-                
-                { Number(product.restaurant.deliveryFae) > 0 ? (
-                    <p className='text-xs font-semibold'>
-                        {product.restaurant.deliveryTimeMinutes} min
-                    </p>
-                ): (
-                    <p className='text-xs font-semibold'>
-                        Gratis
-                    </p>
-                )}
-            </div>
-        </Card>
-
+        <DeliveryInfo restaurant={product.restaurant} />
     </div>
 
     <div className='mt-6 space-y-3 px-5'>
@@ -137,6 +103,12 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
 
         <ProductList products={extraProducts} />
 
+    </div>
+
+    <div className="mt-6 px-5">
+        <Button className='w-full font-semibold'>
+            Adicionar a Sacola
+        </Button>
     </div>
 
 
