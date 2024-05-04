@@ -12,7 +12,7 @@ async function RecomendadedRestaurants() {
         <Header />
         <div className='px-5 py-6'>
             <h2 className='text-lg font-semibold'>Restaurants Favoritos</h2>
-            <div className='flex flex-wrap w-full gap-6 py-5'>
+            <div className='grid grid-cols-2 w-full gap-6 py-5'>
                 {restaurants.map((restaurant) => (
                     <RestaurantItem key={restaurant.id} restaurant={restaurant} 
                         className='min-w-full max-w-full'
