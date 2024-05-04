@@ -7,14 +7,16 @@ import React from 'react'
 import { formatCurrency } from '../_helpers/price';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { cn } from '../_lib/utils';
 
 interface RestaurantItemProps {
     restaurant: Restaurant;
+    className?: string;
 }
 
-export const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
+export const RestaurantItem = ({ restaurant, className }: RestaurantItemProps) => {
   return (
-    <Link className='min-w-[266px] max-w-[266px]' href={`/restaurants/${restaurant.id}`}>
+    <Link className={cn("min-w-[266px] max-w-[266px]", className)} href={`/restaurants/${restaurant.id}`}>
         <div className='w-full space-y-3'>
             <div className='w-full h-[136px] relative'>
                 <Image src={restaurant.imageUrl} 
@@ -31,7 +33,7 @@ export const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
                 </Button>
             </div>
 
-            <div className='space-y-4 py-6'>
+            <div className='space-y-4'>
                 <h3 className='font-semibold text-sm'>{restaurant.name}</h3>
                 <div className="flex gap-3">
                     <div className="flex gap-1 items-center">
