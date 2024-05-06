@@ -13,8 +13,8 @@ export default function Car() {
   const { products, subTotalPrice, totalPrice, totalDisconts } = useContext(CartContext)
 
   return (
-    <div className='py-5'>
-        <div className='space-y-4'>
+    <div className='py-5 h-full flex flex-col'>
+        <div className='space-y-4 flex-auto'>
             {products.map((product) => (
                 <CartItem key={product.id} cartProduct={product} />
             ))}
@@ -40,9 +40,9 @@ export default function Car() {
                     <div className='flex justify-between items-center'>
                         <span className='text-xs text-muted-foreground'>Entrega</span>
 
-                        { Number(products[0].restaurant.deliveryFae) > 0 
+                        { Number(products[0]?.restaurant.deliveryFae) > 0 
                         ? <span className='uppercase text-primary'>Gratis</span>
-                        : formatCurrency(Number(products[0].restaurant.deliveryFae))}
+                        : formatCurrency(Number(products[0]?.restaurant.deliveryFae))}
                     </div>
 
                     <Separator />

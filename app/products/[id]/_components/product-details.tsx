@@ -14,6 +14,7 @@ import DeliveryInfo from '@/app/_components/delivery-info';
 import { CartContext } from '@/app/_context/cart';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/app/_components/ui/sheet';
 import Cart from '@/app/_components/cart';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/app/_components/ui/alert-dialog';
 
 interface ProductDetailsProps {
     product: Prisma.ProductGetPayload<{
@@ -32,16 +33,29 @@ interface ProductDetailsProps {
 export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) => {
     const [qunatity, setQuantity] = useState(1)
     const [isCartOpen, setIsCartOpen] = useState(false)
+    const [isDialog, setIsDialog] = useState(false)
 
     const { products, addProduct } = useContext(CartContext)
 
-    
+    const addToCart = ({emptyCart = false}: { emptyCart?: boolean}) => {
+        addProduct({product, quantity: qunatity, emptyCart})
+        setIsCartOpen(true)
+    }
 
     const handleAddCart = () => {
-        addProduct(product, qunatity)
-        setIsCartOpen(true)
 
-        console.log("products >>> ", products)
+        const restaurant = products.some(
+            (item) => item.restaurantId != product.restaurantId
+        )
+
+        if(restaurant){
+            setIsDialog(true)
+            return;
+        }
+
+        addToCart({
+            emptyCart: false
+        })
     }
 
     const handleIncrement = ()  => setQuantity(currentState => currentState + 1)
@@ -139,6 +153,23 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
         <Cart />
     </SheetContent>
 </Sheet>
+
+<AlertDialog open={isDialog} onOpenChange={setIsDialog}>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>
+        Deseja mesmo adicionar a sacola
+      </AlertDialogTitle>
+      <AlertDialogDescription>
+        Deseja mesmo adicionar esse produto ? Isso limpara seu carrinho
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction onClick={() => addToCart({emptyCart: true})}>Adicionar</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
 
 </>
   )
