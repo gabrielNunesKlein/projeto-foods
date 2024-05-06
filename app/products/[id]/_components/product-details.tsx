@@ -1,17 +1,19 @@
 
 "use client";
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import Image from 'next/image'
 import { Prisma } from '@prisma/client'
 import { BadgeDiscont } from '../../../_components/badge-discont'
 import { formatCurrency, getProductTotalPrice } from '../../../_helpers/price'
 import { Button } from '@/app/_components/ui/button'
-import { BikeIcon, ChevronLeftIcon, ChevronRightIcon, TimerIcon } from 'lucide-react'
-import { Card } from '@/app/_components/ui/card'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { ProductList } from '@/app/_components/ProductList'
 import DeliveryInfo from '@/app/_components/delivery-info';
+import { CartContext } from '@/app/_context/cart';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/app/_components/ui/sheet';
+import Cart from '@/app/_components/cart';
 
 interface ProductDetailsProps {
     product: Prisma.ProductGetPayload<{
@@ -29,6 +31,18 @@ interface ProductDetailsProps {
 
 export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) => {
     const [qunatity, setQuantity] = useState(1)
+    const [isCartOpen, setIsCartOpen] = useState(false)
+
+    const { products, addProduct } = useContext(CartContext)
+
+    
+
+    const handleAddCart = () => {
+        addProduct(product, qunatity)
+        setIsCartOpen(true)
+
+        console.log("products >>> ", products)
+    }
 
     const handleIncrement = ()  => setQuantity(currentState => currentState + 1)
     
@@ -42,6 +56,7 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
 
 
   return (
+    <>
     <div className="z-50 relative py-5 rounded-tl-3xl rounded-tr-3xl mt-[-1.5rem] bg-white">
     <div className="flex items-center gap-[0.375rem] px-5">
         <div className="relative w-6 h-6">
@@ -106,12 +121,25 @@ export const ProductDetails = ({ product, extraProducts }: ProductDetailsProps) 
     </div>
 
     <div className="mt-6 px-5">
-        <Button className='w-full font-semibold'>
+        <Button onClick={handleAddCart} className='w-full font-semibold'>
             Adicionar a Sacola
         </Button>
     </div>
 
 
 </div>
+
+<Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+    <SheetContent className='w-[90vw]'>
+        <SheetHeader>
+            <SheetTitle className='text-left'>
+                Sacola
+            </SheetTitle>
+        </SheetHeader>
+        <Cart />
+    </SheetContent>
+</Sheet>
+
+</>
   )
 }
